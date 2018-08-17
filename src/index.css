@@ -3,3 +3,24 @@ body {
   padding: 0;
   font-family: sans-serif;
 }
+
+.app-frame {
+  margin: auto;
+  margin-top: 10px;
+  padding: 30px;
+  width: calc(80vw);
+  border: 1px solid;
+}
+
+.customers-actions {
+  background: #AAA;
+  padding: 10px;
+  margin: 10px;
+}
+
+.customers-actions button {
+  background: white;
+  min-width: 100px;
+  height: 30px;
+  margin: 5px;
+}
