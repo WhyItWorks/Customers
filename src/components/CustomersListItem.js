@@ -2,10 +2,10 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { Link } from "react-router-dom";
 
-const CustomerListItem = ({ name, dni, editAction, delAction, urlPath }) => {
+const CustomerListItems = ({ name, dni, editAction, delAction, urlPath }) => {
     return (
         <div>
-            <div className="customer-list-item">
+            <div className="customers-list-item">
                 <div className="field">
                     <Link
                         to={`${urlPath}${dni}`}>{name}
@@ -26,7 +26,7 @@ const CustomerListItem = ({ name, dni, editAction, delAction, urlPath }) => {
     )
 }
 
-CustomerListItem.propTypes = {
+CustomerListItems.propTypes = {
     name: PropTypes.string.isRequired,
     dni: PropTypes.string.isRequired,
     editAction: PropTypes.string.isRequired,
@@ -34,4 +34,4 @@ CustomerListItem.propTypes = {
     urlPath: PropTypes.string.isRequired,
 }
 
-export default CustomerListItem
+export default CustomerListItems

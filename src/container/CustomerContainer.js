@@ -1,8 +1,14 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { withRouter } from 'react-router-dom'
+import { connect } from 'react-redux'
+
 import AppFrame from '../components/AppFrame';
 import CustomerList from '../components/CustomerList';
 import CustomersActions from '../components/CustomersActions';
+
+import { fetchCustomers } from './../actions/fetchCustomers';
+
 
 
 const customers = [
@@ -19,11 +25,18 @@ const customers = [
 ];
 
 class CustomerContainer extends Component {
+
+    componentDidMount = () => {
+        this.props.fetchCustomers();
+    }
+    
+
     renderBody = customers => (
+        
         <div>
             <CustomerList customers={customers} urlPath={'customer/'} />
             <CustomersActions>
-                <button onClick={this.handleAddNew}></button>
+                <button onClick={this.handleAddNew}>Añadir</button>
             </CustomersActions>
 
         </div>)
@@ -42,7 +55,8 @@ class CustomerContainer extends Component {
 }
 
 CustomerContainer.proptypes = {
-
+    fetchCustomers: PropTypes.func.isRequired,
 }
 
-export default CustomerContainer
+
+export default withRouter(connect(null,  { fetchCustomers })(CustomerContainer)) 
