@@ -12,7 +12,7 @@ const CustomerList = ({ customers, urlPath }) => {
                         <CustomerListItem
                             key={c.dni}
                             name={c.name}
-                            dni={c.name}
+                            dni={c.dni}
                             editAction={'Editar'}
                             delAction={'Eliminar'}
                             urlPath={urlPath}

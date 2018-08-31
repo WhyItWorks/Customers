@@ -1,61 +1,56 @@
+
 import React, { Component } from 'react'
+import { connect } from "react-redux";
 import PropTypes from 'prop-types'
-import { withRouter } from 'react-router-dom'
-import { connect } from 'react-redux'
-
+import { withRouter, Route } from "react-router-dom";
 import AppFrame from '../components/AppFrame';
-import CustomerList from '../components/CustomerList';
-import CustomersActions from '../components/CustomersActions';
-
-import { fetchCustomers } from './../actions/fetchCustomers';
-import { getCustomers } from "../selectors/customers";
-
-
-
-
+import { getCustomerByDni } from '../selectors/customers';
+import CustomerEdit from "../components/CustomerEdit";
+import CustomerData from "../components/CustomerData";
 
 class CustomerContainer extends Component {
 
-    componentDidMount = () => {
-        this.props.fetchCustomers();
+    handleSubmit = values => {
+        console.log(JSON.stringify(values))
+    }
+    handleOnBack = () => {
+        this.props.history.goBack();
     }
 
+    renderBody = () => (
+        <Route path="/customer/:dni/edit" children={
+            ({ match }) => {
 
-    renderBody = customers => (
+                const CustomerControl = match ? CustomerEdit : CustomerData
+                return <CustomerControl {...this.props.customer}
+                    onSubmit={this.handleSubmit}
+                    onBack={this.handleOnBack} />
+                {/* match ?
+                        <CustomerEdit {...this.props.customer} /> :
+                        <CustomerData {...this.props.customer} /> */}
 
-        <div>
-            <CustomerList customers={customers} urlPath={'customer/'} />
-            <CustomersActions>
-                <button onClick={this.handleAddNew}>Añadir</button>
-            </CustomersActions>
-
-        </div>)
-
+            }
+        } />
+    )
 
     render() {
         return (
             <div>
                 <AppFrame
-                    header='Listado'
-                    body={this.renderBody(this.props.customers)}
+                    header={`Cliente ${this.props.dni}`}
+                    body={this.renderBody()}
                 />
             </div>
         )
     }
 }
 
-CustomerContainer.proptypes = {
-    fetchCustomers: PropTypes.func.isRequired,
-    customers: PropTypes.array
+CustomerContainer.propTypes = {
+    dni: PropTypes.string.isRequired,
+    customer: PropTypes.object.isRequired,
 }
 
-CustomerContainer.defaultProps = {
-    customers: []
-}
-
-const mapStateToProps = state => ({
-    customers: getCustomers(state)
+const mapStateToProps = (state, props) => ({
+    customer: getCustomerByDni(state, props)
 })
-
-
-export default withRouter(connect(mapStateToProps, { fetchCustomers })(CustomerContainer)) 
+export default withRouter(connect(mapStateToProps, null)(CustomerContainer))

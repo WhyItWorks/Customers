@@ -1,7 +1,8 @@
 import React, { Component } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import HomeContainer from './container/HomeContainer';
 import './App.css'
+import HomeContainer from './container/HomeContainer';
+import CustomersContainer from './container/CustomersContainer';
 import CustomerContainer from './container/CustomerContainer';
 
 class App extends Component {
@@ -17,11 +18,12 @@ class App extends Component {
       <Router>
         <div className='App'>
           <Route exact path="/" component={HomeContainer} />
-          <Route exact path="/customers" component={CustomerContainer} />
+          <Route exact path="/customers" component={CustomersContainer} />
           <Switch>
             {/* Desde la más restrictiva a la más general */}
-            <Route path="/customers/new" component={this.renderCustomerNewContainer} />
-            <Route path="/customers/:dni" component={this.renderCustomerContainer} />
+            <Route path="/customer/new" component={this.renderCustomerNewContainer} />
+            <Route path="/customer/:dni" render={props => <CustomerContainer dni={props.match.params.dni} />} />
+            {/* <Route path="/customer/:dni" render={props => <CustomerContainer {...props} dni={props.match.params.dni} />} /> */}
           </Switch>
         </div>
       </Router>
