@@ -43,7 +43,7 @@ const CustomerEdit = ({ name, dni, age, handleSubmit, submitting, onBack }) => {
                 <Field name="age" label="Edad" component={MyField} type="number" validate={isNumber}></Field>
 
                 <CustomerActions>
-                    <button type="submit" disable={submitting}>Aceptar</button>
+                    <button type="submit" disabled={submitting}>Aceptar</button>
                     <button onClick={onBack}>Cancelar</button>
                 </CustomerActions>
             </form>
